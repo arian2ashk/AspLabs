@@ -1,0 +1,1 @@
+[![GitHub](https://github.com/arian2ashk/AspLabs/actions/workflows/dotnet.yml/badge.svg)](https://github.com/arian2ashk/AspLabs/actions/workflows/dotnet.yml)
