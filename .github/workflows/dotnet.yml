@@ -20,6 +20,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    - name: Setup Nodejs
+      uses: actions/setup-node@v2
+      with:
+        node-version: "13"
+    - name: install Azure storage account
+      run: npm install -g azurite
+    - name: run Azure storage account
+      run: azurite --silent >> azurite.log 2>&1 &
     - name: Restore dependencies
       run: dotnet restore
     - name: Build

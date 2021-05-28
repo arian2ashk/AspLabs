@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -25,6 +25,11 @@ namespace Microsoft.AspNet.WebHooks.Config
         public SettingsDictionary()
             : base(StringComparer.OrdinalIgnoreCase)
         {
+        }
+
+        public SettingsDictionary(Dictionary<string, ConnectionSettings> connectionSettings)
+        {
+            _connections = connectionSettings;
         }
 
         /// <summary>
@@ -103,7 +108,7 @@ namespace Microsoft.AspNet.WebHooks.Config
             var value = GetValueOrDefault(key);
             if (value != null)
             {
-                return bool.TryParse(value.Trim(), out var isSet) ? isSet : false;
+                return bool.TryParse(value.Trim(), out var isSet) && isSet;
             }
             return false;
         }

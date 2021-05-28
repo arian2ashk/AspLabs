@@ -1,4 +1,4 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -20,11 +20,7 @@ namespace Microsoft.AspNet.WebHooks
 
         protected WebHookStoreTest(IWebHookStore store)
         {
-            if (store == null)
-            {
-                throw new ArgumentNullException(nameof(store));
-            }
-            _store = store;
+            _store = store ?? throw new ArgumentNullException(nameof(store));
         }
 
         protected string TestUser => "TestUser";
@@ -42,7 +38,7 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(WebHookCount, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Description == TestUser).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Description == TestUser));
         }
 
         [Theory]
@@ -63,7 +59,7 @@ namespace Microsoft.AspNet.WebHooks
             // Assert
             var expectedCount = present ? WebHookCount : 0;
             Assert.Equal(expectedCount, actual.Count);
-            Assert.Equal(expectedCount, actual.Where(h => h.Description == TestUser).Count());
+            Assert.Equal(expectedCount, actual.Count(h => h.Description == TestUser));
         }
 
         [Fact]
@@ -81,7 +77,7 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(WebHookCount, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Description == TestUser).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Description == TestUser));
         }
 
         [Fact]
@@ -97,8 +93,8 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(WebHookCount + 1, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Filters.Contains("a1")).Count());
-            Assert.Equal(1, actual.Where(h => h.Filters.Contains("*")).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Filters.Contains("a1")));
+            Assert.Equal(1, actual.Count(h => h.Filters.Contains("*")));
         }
 
         [Theory]
@@ -119,7 +115,7 @@ namespace Microsoft.AspNet.WebHooks
             // Assert
             var expectedCount = present ? WebHookCount : 0;
             Assert.Equal(expectedCount, actual.Count);
-            Assert.Equal(expectedCount, actual.Where(h => h.Description == TestUser).Count());
+            Assert.Equal(expectedCount, actual.Count(h => h.Description == TestUser));
         }
 
         [Fact]
@@ -137,7 +133,7 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(WebHookCount, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Description == TestUser).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Description == TestUser));
         }
 
         [Fact]
@@ -153,8 +149,8 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(WebHookCount + 1, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Filters.Contains("a1")).Count());
-            Assert.Equal(1, actual.Where(h => h.Filters.Contains("*")).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Filters.Contains("a1")));
+            Assert.Equal(1, actual.Count(h => h.Filters.Contains("*")));
         }
 
         [Theory]
@@ -178,8 +174,8 @@ namespace Microsoft.AspNet.WebHooks
             // Assert
             var expectedCount = present ? WebHookCount : 0;
             Assert.Equal(2 * expectedCount, actual.Count);
-            Assert.Equal(expectedCount, actual.Where(h => h.Description == TestUser).Count());
-            Assert.Equal(expectedCount, actual.Where(h => h.Description == OtherUser).Count());
+            Assert.Equal(expectedCount, actual.Count(h => h.Description == TestUser));
+            Assert.Equal(expectedCount, actual.Count(h => h.Description == OtherUser));
         }
 
         [Fact]
@@ -198,8 +194,8 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(2 * WebHookCount, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Description == TestUser).Count());
-            Assert.Equal(WebHookCount, actual.Where(h => h.Description == OtherUser).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Description == TestUser));
+            Assert.Equal(WebHookCount, actual.Count(h => h.Description == OtherUser));
         }
 
         [Fact]
@@ -218,8 +214,8 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal((2 * WebHookCount) + 2, actual.Count);
-            Assert.Equal(2 * WebHookCount, actual.Where(h => h.Filters.Contains("a1")).Count());
-            Assert.Equal(2, actual.Where(h => h.Filters.Contains("*")).Count());
+            Assert.Equal(2 * WebHookCount, actual.Count(h => h.Filters.Contains("a1")));
+            Assert.Equal(2, actual.Count(h => h.Filters.Contains("*")));
         }
 
         [Theory]
@@ -243,8 +239,8 @@ namespace Microsoft.AspNet.WebHooks
             // Assert
             var expectedCount = present ? WebHookCount : 0;
             Assert.Equal(expectedCount, actual.Count);
-            Assert.Equal(expectedCount, actual.Where(h => h.Description == TestUser).Count());
-            Assert.Equal(0, actual.Where(h => h.Description == OtherUser).Count());
+            Assert.Equal(expectedCount, actual.Count(h => h.Description == TestUser));
+            Assert.Equal(0, actual.Count(h => h.Description == OtherUser));
         }
 
         [Fact]
@@ -263,8 +259,8 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(WebHookCount, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Description == TestUser).Count());
-            Assert.Equal(0, actual.Where(h => h.Description == OtherUser).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Description == TestUser));
+            Assert.Equal(0, actual.Count(h => h.Description == OtherUser));
         }
 
         [Fact]
@@ -283,8 +279,8 @@ namespace Microsoft.AspNet.WebHooks
 
             // Assert
             Assert.Equal(WebHookCount + 1, actual.Count);
-            Assert.Equal(WebHookCount, actual.Where(h => h.Filters.Contains("a1")).Count());
-            Assert.Equal(1, actual.Where(h => h.Filters.Contains("*")).Count());
+            Assert.Equal(WebHookCount, actual.Count(h => h.Filters.Contains("a1")));
+            Assert.Equal(1, actual.Count(h => h.Filters.Contains("*")));
         }
 
         [Theory]
